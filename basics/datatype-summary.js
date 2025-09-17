@@ -29,3 +29,26 @@ console.log("Hello Reader");
 console.log(typeof myFunction);
 
 // https://262.ecma-international.org/5.1/#sec-11..4.3
+
+
+
+// *******************************************
+
+// Heap(premitive datatype)   stack(Non-premitive datatype)
+
+let myName = "Aryan";
+let anotherName = myName;
+anotherName = "Aaru";
+console.log(myName);
+console.log(anotherName);
+
+let userOne = {
+    email:"aryan@gmail.com",
+    upi : "user@sbi"
+}
+
+userTwo = userOne;
+
+userTwo.email = "aryan163@gmail.com";
+console.log(userOne);
+console.log(userTwo);
