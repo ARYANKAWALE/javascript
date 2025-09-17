@@ -34,7 +34,7 @@ console.log(typeof myFunction);
 
 // *******************************************
 
-// Heap(premitive datatype)   stack(Non-premitive datatype)
+// Stack(premitive datatype)   Heap(Non-premitive datatype)
 
 let myName = "Aryan";
 let anotherName = myName;
