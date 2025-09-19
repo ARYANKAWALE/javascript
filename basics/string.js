@@ -24,8 +24,31 @@ const newStringOne = "     aryan     ";
 // console.log(newStringOne.trim())
 
 const url = "https://www.aryan.com/aryan%20kawale";
-console.log(url.replace('%20', '-'))
+// console.log(url.replace('%20', '-'))
 
-console.log(url.includes('aryan'))
+// console.log(url.includes('aryan'))
 
-console.log
+const sentence = "The quick brown fox jumps over the lazy dog.";
+
+let index = 5;
+
+// console.log(`An index of ${index} returns the character ${sentence.at(index)}`);
+
+
+index = -4;
+
+// console.log(`An index of ${index} returns the character ${sentence.at(index)}`);
+
+const myString = "Every green bus drives fast.";
+
+// Using length property and charAt() method
+const lengthWay = myString.charAt(myString.length - 2);
+console.log(lengthWay); // 't'
+
+// Using slice() method
+const sliceWay = myString.slice(-2, -1);
+console.log(sliceWay); // 't'
+
+// Using at() method
+const atWay = myString.at(-2);
+console.log(atWay); // 't'
