@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+</body>
+<script>
+
+// this is not used
+    // document.getElementById('id').onclick= function(){
+    //     alert('this is clicked')
+    // }
+
+    // type,timestamp,defaultPrevented
+    // target,toElement,srcElement,currentTarget,
+    // clientX, clientY, screenX, screenY
+    // altkey, ctrlkey, shiftkey, keyCode
+
+
+// this is better approach
+    // document.getElementById().addEventListener('click',(e)=>{
+    //     alert()
+    //     e.stopPropagation()
+    // },false) 
+    // true:-capturing(captures from top),means:top-bottom
+    // false:-bubbling(bubbling from bottom),means:bottom-top
+
+
+    // document.getElementById('').addEventListener('click',function(e){
+    //     e.PreventDefault()
+    //     console.log('')
+    // },false)
+
+
+    document.querySelector('#images').addEventListener('click',function(e){
+        console.log(e.target.parentNode);
+        if (e.target.tagName === '') {
+            console.log(e.target.id)
+            let removeIt = e.target.parentNode
+            removeIt.remove();  
+        }
+    })
+
+    // removeIt.parentNode.removeChild(removeIt)
+
+    
+
+
+
+
+
+</script>
+</html>
