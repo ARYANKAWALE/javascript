@@ -5,14 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>API</title>
   </head>
-  <body>
-  </body>
+  <body></body>
   <script>
     const requestUrl = "https://api.github.com/users/ARYANKAWALE";
 
     const xhr = new XMLHttpRequest();
     xhr.open("GET", requestUrl);
-    xhr.onreadystatechange = function() {
+    xhr.onreadystatechange = function () {
       console.log(xhr.readyState);
 
       if (xhr.readyState === 4) {
