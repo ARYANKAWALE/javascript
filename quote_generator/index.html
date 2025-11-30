@@ -18,7 +18,8 @@ body {
         background-color: rgb(174, 190, 245);
         min-width: 400px;
         max-width: 400px;
-        max-height: 250px;
+        max-height: 200px;
+        min-height: 200px;
          /* margin: 0 auto; */
         padding: 30px;
         border-radius: 12px;
@@ -39,7 +40,8 @@ body {
         transition: background-color 0.3s;
       }
       button:hover {
-        background-color: #0056b3;
+        background-color: #494949;
+        border: 2px rgb(88, 106, 244) solid;
       }
       button:disabled {
         background-color: #747373;
@@ -50,7 +52,7 @@ body {
         font-size: 1.2rem;
         color: #333;
         font-style: italic;
-        min-height: 50px; /* Keeps the box size stable */
+        min-height: 50px;
         line-height: 1.5;
       }
     </style>
@@ -81,14 +83,12 @@ body {
         const data = await response.json();
         quoteText.innerText = `"${data.slip.advice}"`;
       } catch (error) {
-        // Handle errors (like no internet)
         console.error(error);
         if(quoteText){
           quoteText.innerText = "Failed to fetch quote. Please try again.";
         }
       }
 
-      // Re-enable the button
       btn.disabled = false;
       btn.innerText = "Get New Quote";
     }

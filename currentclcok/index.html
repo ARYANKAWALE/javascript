@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Modern Digital Clock</title>
+    <!-- Import Google Fonts: Poppins for UI text, JetBrains Mono for the clock numbers -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500;700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    
+    <style>
+      :root {
+        --primary-bg: #111827;
+        --glass-bg: rgba(255, 255, 255, 0.1);
+        --glass-border: rgba(255, 255, 255, 0.2);
+        --text-color: #ffffff;
+        --text-muted: #d1d5db;
+        --accent-glow: rgba(139, 92, 246, 0.5); /* Purple-ish glow */
+      }
+
+      body {
+        background-color: var(--primary-bg);
+        color: var(--text-color);
+        margin: 0;
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-family: 'Poppins', sans-serif;
+        overflow: hidden;
+        position: relative;
+      }
+
+      /* Animated Background Layer */
+      .bg-animation {
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(-45deg, #312e81, #581c87, #000000);
+        background-size: 400% 400%;
+        animation: gradient-xy 15s ease infinite;
+        z-index: -10;
+        opacity: 0.8;
+      }
+
+      /* Decorative Blobs */
+      .blob {
+        position: absolute;
+        width: 18rem;
+        height: 18rem;
+        border-radius: 50%;
+        mix-blend-mode: multiply;
+        filter: blur(40px);
+        opacity: 0.2;
+        animation: blob-bounce 7s infinite;
+      }
+
+      .blob-1 {
+        top: 25%;
+        left: 25%;
+        background-color: #a855f7; /* Purple */
+      }
+
+      .blob-2 {
+        bottom: 25%;
+        right: 25%;
+        background-color: #6366f1; /* Indigo */
+        animation-delay: 2s;
+      }
+
+      /* Main Card (Glassmorphism) */
+      #main {
+        position: relative;
+        z-index: 10;
+        padding: 3rem; /* p-12 */
+        width: 90%;
+        max-width: 32rem; /* max-w-lg */
+        background: var(--glass-bg);
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+        border: 1px solid var(--glass-border);
+        border-radius: 1.5rem; /* rounded-3xl */
+        box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+        text-align: center;
+        transition: transform 0.3s ease;
+      }
+
+      #main:hover {
+        transform: scale(1.02);
+      }
+
+      /* Label */
+      .label-container {
+        margin-bottom: 0.5rem;
+      }
+
+      .label-text {
+        text-transform: uppercase;
+        letter-spacing: 0.2em;
+        font-size: 0.75rem;
+        font-weight: 600;
+        color: #c7d2fe; /* indigo-200 */
+        background-color: rgba(99, 102, 241, 0.2);
+        padding: 0.25rem 0.75rem;
+        border-radius: 9999px;
+      }
+
+      /* Greeting */
+      #greeting {
+        font-size: 1.5rem; /* text-2xl */
+        font-weight: 300; /* font-light */
+        margin-bottom: 1.5rem;
+        color: #e0e7ff; /* indigo-100 */
+        animation: fadeIn 0.5s ease-in;
+      }
+
+      @media (min-width: 768px) {
+        #greeting {
+          font-size: 1.875rem; /* md:text-3xl */
+        }
+      }
+
+      /* Clock Container */
+      .clock-container {
+        position: relative;
+        padding: 1rem 0;
+        margin: 1rem 0;
+      }
+
+      /* Glow effect behind clock */
+      .clock-glow {
+        position: absolute;
+        inset: -0.25rem;
+        background: linear-gradient(to right, #db2777, #9333ea);
+        border-radius: 0.5rem;
+        filter: blur(8px);
+        opacity: 0.25;
+        transition: opacity 1s;
+        z-index: -1;
+      }
+
+      .clock-container:hover .clock-glow {
+        opacity: 0.5;
+        transition-duration: 0.2s;
+      }
+
+      /* Clock Text */
+      #currtime {
+        position: relative;
+        font-family: 'JetBrains Mono', monospace;
+        font-weight: 700;
+        font-size: 3rem; /* text-5xl */
+        background: linear-gradient(to right, #ffffff, #d1d5db);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text; /* Standard property */
+        color: transparent; /* Fallback */
+        margin: 0;
+        letter-spacing: -0.025em;
+        filter: drop-shadow(0 1px 2px rgba(0,0,0,0.1));
+      }
+
+      @media (min-width: 768px) {
+        #currtime {
+          font-size: 3.75rem; /* md:text-6xl */
+        }
+      }
+      
+      @media (min-width: 1024px) {
+        #currtime {
+          font-size: 4.5rem; /* lg:text-7xl */
+        }
+      }
+
+      /* Date Section */
+      .date-section {
+        margin-top: 1.5rem;
+        padding-top: 1.5rem;
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+      }
+
+      #currdate {
+        font-size: 1.125rem; /* text-lg */
+        color: var(--text-muted);
+        font-weight: 300;
+        letter-spacing: 0.025em;
+        margin: 0;
+      }
+
+      @media (min-width: 768px) {
+        #currdate {
+          font-size: 1.25rem; /* md:text-xl */
+        }
+      }
+
+      /* Animations */
+      @keyframes gradient-xy {
+        0%, 100% { background-position: 0% 0%; }
+        25% { background-position: 100% 0%; }
+        50% { background-position: 100% 100%; }
+        75% { background-position: 0% 100%; }
+      }
+
+      @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(10px); }
+        to { opacity: 1; transform: translateY(0); }
+      }
+
+      @keyframes blob-bounce {
+        0% { transform: translate(0px, 0px) scale(1); }
+        33% { transform: translate(30px, -50px) scale(1.1); }
+        66% { transform: translate(-20px, 20px) scale(0.9); }
+        100% { transform: translate(0px, 0px) scale(1); }
+      }
+
+    </style>
+  </head>
+  <body>
+    
+    <!-- Animated Background Layer -->
+    <div class="bg-animation"></div>
+    
+    <!-- Decorative glow orbs -->
+    <div class="blob blob-1"></div>
+    <div class="blob blob-2"></div>
+
+    <!-- Main Card -->
+    <div id="main">
+      
+      <!-- Header / Label -->
+      <div class="label-container">
+        <span class="label-text">System Time</span>
+      </div>
+
+      <!-- Greeting -->
+      <p id="greeting">Loading...</p>
+
+      <!-- The Clock -->
+      <div class="clock-container">
+        <div class="clock-glow"></div>
+        <p id="currtime">00:00:00</p>
+      </div>
+
+      <!-- Date -->
+      <div class="date-section">
+        <p id="currdate">Loading...</p>
+      </div>
+
+    </div>
+  </body>
+  <script>
+    const gettime = document.querySelector("#currtime");
+    const getdate = document.querySelector("#currdate");
+    const getgreetings = document.querySelector("#greeting");
+
+    function updateTime() {
+      const now = new Date();
+
+      gettime.innerText = new Date().toLocaleTimeString();
+
+      const dateOption = {
+        weekday: "long",
+        year: "numeric",
+        month: "long",
+        day: "numeric",
+      };
+
+      getdate.innerText = now.toLocaleDateString(undefined, dateOption);
+      
+      const hour = now.getHours();
+      let message = "";
+      
+      if(hour >=5 && hour < 12){
+          message = "Good Morning"
+        }else if(hour >= 12 && hour < 17){
+            message= "Good Afternoon"
+        }else if(hour >=17 && hour <20 ){
+            message = "Good Evening"
+        }else{
+            message = "Good Night"
+        }
+        getgreetings.innerText = message
+    }
+
+
+
+    updateTime();
+
+    setInterval(updateTime, 1000);
+  </script>
+</html>
