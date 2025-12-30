@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h2>Counter:<span id="count">0</span></h2>
+    <button id="increament">increase</button>
+    <button id="decrement">decrease</button>
+    <button id="reset">Reset</button>
+
+    <script>
+        const counter = document.getElementById("count")
+        const increamentBtn = document.getElementById("increament")
+        const decrementBtn = document.getElementById("decrement")
+        const resetBtn = document.getElementById("reset")
+
+        let count = 0
+
+        function updateCount(){
+            counter.innerHTML = count;
+        }
+        increamentBtn.addEventListener("click",()=>{
+            count++;
+            updateCount();
+        })
+
+        decrementBtn.addEventListener("click",()=>{
+            if(count<=0){
+                return;
+            }
+            count--;
+            updateCount();
+        })
+        resetBtn.addEventListener("click",()=>{
+            count = 0;
+            updateCount();
+        })
+
+    </script>
+</body>
+</html>
